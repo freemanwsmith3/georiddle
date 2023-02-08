@@ -76,7 +76,7 @@ const Results = (props) => {
                 ) :(
                     <Card  className= {classes.listResults}>
                         <CardContent className= {classes.listResults}>
-                            <li className={classes.blank} key={index}>Country number: {index+1}</li>
+                            <li className={classes.blank} key={index}>Country Number: {index+1}</li>
                         </CardContent>
                     </Card>
                     )
