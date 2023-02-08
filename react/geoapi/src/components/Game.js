@@ -12,6 +12,23 @@ import Results from './Results';
 import Strikes from './Strikes';
 
 const useStyles = makeStyles((theme) => ({
+
+    riddleFirst: {
+        borderBottom: `1px solid black`,
+    },
+    riddleSecond: {
+        borderBottom: `1px solid black`,
+    },
+    riddleHeader:{
+
+        fontSize: '32px',
+        textAlign: 'center',
+    },
+    riddleNumberOfCountries:{
+        fontSize: '28px',
+        textAlign: 'center',   
+    },
+
 	suggestion: {
 
 		cursor: 'pointer',
@@ -27,12 +44,96 @@ const useStyles = makeStyles((theme) => ({
 
     listResults: {
         padding: '0px',
-    }
+    }, 
+
+    incorrect: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'baseline',
+        fontSize: '24px',
+        textAlign: 'center',
+        marginBottom:  '0px',
+        color: 'red',
+        borderColor: 'red',
+        borderLeft: '1px solid ',
+        borderRight: '1px solid ',
+        borderBottom: '1px solid ',
+        borderTop: '1px solid ',
+    }, 
+
+    correct: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'baseline',
+        fontSize: '24px',
+        textAlign: 'center',
+        marginBottom:  '0px',
+        color: 'green',
+        borderColor: 'green',
+        borderLeft: '1px solid ',
+        borderRight: '1px solid ',
+        borderBottom: '1px solid ',
+        borderTop: '1px solid ',
+    },
+
+    blank: {
+        
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'baseline',
+        fontSize: '24px',
+        textAlign: 'center',
+        marginBottom: '0px',
+        color: 'black',
+        borderColor: 'black',
+        borderLeft: '1px solid ',
+        borderRight: '1px solid ',
+        borderBottom: '1px solid ',
+        borderTop: '1px solid ',
+    }, 
+
+    winner: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'baseline',
+        fontSize: '32px',
+        textAlign: 'center',
+        marginBottom:  '0px',
+        color: 'green',
+        borderColor: 'green',
+        borderLeft: '1px solid ',
+        borderRight: '1px solid ',
+        borderBottom: '1px solid ',
+        borderTop: '1px solid ',
+    },
+
+    loser: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'baseline',
+        fontSize: '32px',
+        textAlign: 'center',
+        marginBottom:  '0px',
+        color: 'red',
+        borderColor: 'red',
+        borderLeft: '1px solid ',
+        borderRight: '1px solid ',
+        borderBottom: '1px solid ',
+        borderTop: '1px solid ',
+    },
+
+
 
 
 }));
 
-const Guess = (props) => {
+function toTitleCase(str) {
+    return str.toLowerCase().split(' ').map(function (word) {
+      return (word.charAt(0).toUpperCase() + word.slice(1));
+    }).join(' ');
+  }
+
+const Game = (props) => {
 
     const { answers, countries } = props;
     const [strikes] = useState([])
@@ -42,10 +143,10 @@ const Guess = (props) => {
     const [finished, setFinished] = useState([])
     const [boolError, setBoolError] = useState(false)
     const [helpertext, setHelpertext] = useState([])
-
-
+    const [headerText, setHeaderText] = useState('Remaining: ' + (answers.answers.length+strikes.length-history.length) + ' Countries  || ' + (3 -strikes.length) + ' Strikes')
     
     const classes = useStyles();
+    const [riddleHeaderClass, setRiddleHeaderClass] = useState(classes.riddleNumberOfCountries)
     
 
     const onSuggestHandler = (text)=>{
@@ -71,7 +172,7 @@ const Guess = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let submittedText = text.trim()
+        let submittedText = toTitleCase(text.trim())
 
         if (history.includes(submittedText)){
             setBoolError(true)
@@ -79,14 +180,13 @@ const Guess = (props) => {
             return
         }
 
-
         let countryValidation 
         countryValidation = countries.filter(country => {
 
             const regex = new RegExp(`^${submittedText}$`, "i");
             return (country.name.match(regex))
         })
-        console.log(countryValidation.length)
+
         if (countryValidation.length===0){
             setBoolError(true)
             setHelpertext('Enter a valid country')
@@ -107,47 +207,40 @@ const Guess = (props) => {
 
         if (isStrike === true){
             strikes.push(submittedText)
+
+            if  (strikes.length===3) {
+                setFinished('Lost')
+                setHeaderText('You Loser!')
+                setRiddleHeaderClass(classes.loser)
+                setHistory([])
+            }
             setText('')
             return
         }
+
+        if ((answers.answers.length+strikes.length-history.length)===0 ){
+            setFinished('Won')
+            setHeaderText('Winner')
+            setRiddleHeaderClass(classes.winner)
+            setHistory([])
+        }
+
         setText('')
         return
     }
 
 	if (!answers || answers.length === 0) return <p>Can not find any answers, sorry</p>;
 
-    if ((answers.answers.length+strikes.length-history.length)===0 ){
-        // let finish = 'won'
-        // setHistory([]);
-    return(
-        <React.Fragment>
-            <div>
-                You've Won
-            </div>
-            {/* <Riddle answers={answers} countries={countries} strikes = {strikes} history = {history}/> */}
-            {/* <Results history = {history} answers = {answers}/> */}
-        </React.Fragment>
-    )}
 
-    if  (strikes.length===3) {
-        // let finish = 'lost'
-        // setHistory([]);
-    return(
-        <React.Fragment>
-            <div>
-                You lost
-            </div>
-            {/* <Riddle answers={answers} countries={countries} strikes = {strikes} history = {history} /> */}
-            {/* <Results history = {history} answers = {answers}/> */}
-        </React.Fragment>
-        
-    )}
+        // let finish = 'won'
+        // setHistory([]);}
+
 	return (
 		<React.Fragment>
             {/* <Riddle answers={answers} countries={countries} strikes = {strikes} history = {history} finish = {finished}/> */}
-            <Riddle answers={answers} countries={countries} strikes = {strikes} history = {history} />
-            <Results history = {history} answers = {answers}/>
-            <Strikes strikes = {strikes}  />
+            <Riddle answers={answers} countries={countries} strikes = {strikes} history = {history} finished = {finished} headerText = {headerText} classes = {classes} riddleHeaderClass = {riddleHeaderClass}/>
+            <Results history = {history} answers = {answers}  finished = {finished} classes = {classes} />
+            <Strikes strikes = {strikes} classes = {classes} />
             <Container maxWidth="md" component="main" >
                 <Card className={classes.listResults}>
                     <CardContent className={classes.listResults}>
@@ -188,12 +281,9 @@ const Guess = (props) => {
                         </form>
                     </CardContent>
                 </Card>
-
-
-
             </Container>
 		</React.Fragment>
 	);
 };
 
-export default Guess;
+export default Game;

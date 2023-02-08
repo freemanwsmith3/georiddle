@@ -5,36 +5,16 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
 const useStyles = makeStyles((theme) => ({
-    listResults: {
-        padding: '0px',
-    },
 
-
-    incorrect: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'baseline',
-        fontSize: '24px',
-        textAlign: 'center',
-        marginBottom:  '0px',
-        color: 'red',
-        borderColor: 'red',
-        borderLeft: '1px solid ',
-        borderRight: '1px solid ',
-        borderBottom: '1px solid ',
-        borderTop: '1px solid ',
-    }
 
 
 }));
 
 const Results = (props) => {
 
-	const {  strikes } = props;
+	const {  strikes, classes } = props;
 
 
-    const classes = useStyles();
-    
 
     return (
 		<React.Fragment>                    

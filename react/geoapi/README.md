@@ -1,3 +1,8 @@
+
+To Do:
+
+fix the makestyles warning and keyprop
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
