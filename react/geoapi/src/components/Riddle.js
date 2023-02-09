@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const Riddle = (props) => {
     
     const {answers, headerText, classes, riddleHeaderClass} = props;
-
+    console.log(answers)
 
     return (
     <React.Fragment>
@@ -20,7 +20,7 @@ const Riddle = (props) => {
                     <div className={classes.riddleFirst}>
                         <Typography 
                         className={classes.riddleHeader}>
-                            {answers.question}
+                            GeoRiddle #{answers.id}: {answers.question}
                         </Typography>
                     </div>
                     <div className={classes.riddleSecond}>
