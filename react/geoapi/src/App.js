@@ -10,6 +10,11 @@ function App() {
 	// const AnswersLoading = AnswersLoadingComponent(Riddle);
 	const CountriesLoading = CountriesLoadingComponent(Game)
 	// const RiddleLoading = RiddleLoadingComponent(Riddle)
+
+	const startDate = new Date('February 9, 2023 00:00:00');
+	const currentDate = new Date();
+
+	const riddleID = Math.ceil((currentDate-startDate)/86400000) // find the riddle id by subtracting the number of days, dividing by milliseconds and rounding up
 	const [appState, setAppState] = useState({
 		loadingAnswers: true,
 		loadingCountries: true,
@@ -30,7 +35,7 @@ function App() {
 
 		const loadCountries = async () => {
 			const countryData = await axios.get('http://127.0.0.1:8000/api/countries/')
-			const answerData = await axios.get('http://127.0.0.1:8000/api/riddles/1')
+			const answerData = await axios.get('http://127.0.0.1:8000/api/riddles/' + riddleID)
 			setAppState({ loadingCountries: false, answers: answerData.data, countries: countryData.data});
 		}
 		loadCountries();

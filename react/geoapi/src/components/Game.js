@@ -122,7 +122,10 @@ const useStyles = makeStyles((theme) => ({
         borderTop: '1px solid ',
     },
 
-
+    hidden :
+    {
+        display: 'none'
+    }
 
 
 }));
@@ -140,6 +143,7 @@ const Game = (props) => {
 	const [text, setText] = useState([])
     const [suggestions, setSuggestions] = useState([])
     const [history, setHistory] = useState([])
+    const [guessHidden, setGuessHidden] = useState([])
     const [finished, setFinished] = useState([])
     const [boolError, setBoolError] = useState(false)
     const [helpertext, setHelpertext] = useState([])
@@ -213,6 +217,7 @@ const Game = (props) => {
                 setHeaderText('You Loser!')
                 setRiddleHeaderClass(classes.loser)
                 setHistory([])
+                setGuessHidden([classes.hidden])
             }
             setText('')
             return
@@ -223,6 +228,8 @@ const Game = (props) => {
             setHeaderText('Winner')
             setRiddleHeaderClass(classes.winner)
             setHistory([])
+            setGuessHidden([classes.hidden])
+
         }
 
         setText('')
@@ -235,13 +242,15 @@ const Game = (props) => {
         // let finish = 'won'
         // setHistory([]);}
 
+
+
 	return (
 		<React.Fragment>
             {/* <Riddle answers={answers} countries={countries} strikes = {strikes} history = {history} finish = {finished}/> */}
             <Riddle answers={answers} countries={countries} strikes = {strikes} history = {history} finished = {finished} headerText = {headerText} classes = {classes} riddleHeaderClass = {riddleHeaderClass}/>
             <Results history = {history} answers = {answers}  finished = {finished} classes = {classes} />
             <Strikes strikes = {strikes} classes = {classes} />
-            <Container maxWidth="md" component="main" >
+            <Container maxWidth="md" component="main" className={guessHidden}>
                 <Card className={classes.listResults}>
                     <CardContent className={classes.listResults}>
 
