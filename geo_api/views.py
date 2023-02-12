@@ -22,9 +22,19 @@ class AnswerList(generics.ListAPIView):
 
 class RiddleRetrieve(generics.RetrieveAPIView):
     #permission_classes = [IsAdminUser]
+    serializer_class = RiddleSerializer
+    
 
-    def get(self, request):
-        queryset = Riddle.objects.all()
-        serializer_class = RiddleSerializer
-        return Response(status=status.HTTP_201_CREATED)
+    def get_queryset(self):
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        user = self.request.session.session_key
+        print(user)
+        #############
+        # temporary user issue
+        ############
+
+        #user = 'hix5mm5xfmx0wp4lz3go5peohamu8xhb'
+        return   Riddle.objects.all()
 
