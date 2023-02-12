@@ -141,6 +141,7 @@ const Game = (props) => {
     const { answers, countries } = props;
     const [strikes] = useState([])
 	const [text, setText] = useState([])
+    const [showGuess, setShowGuess] = useState([])
     const [suggestions, setSuggestions] = useState([])
     const [history, setHistory] = useState([])
     const [guessHidden, setGuessHidden] = useState([])
@@ -211,27 +212,28 @@ const Game = (props) => {
 
         if (isStrike === true){
             strikes.push(submittedText)
-
+    
             if  (strikes.length===3) {
                 setFinished('Lost')
                 setHeaderText('You Loser!')
                 setRiddleHeaderClass(classes.loser)
                 setHistory([])
-                setGuessHidden([classes.hidden])
+                setShowGuess(false)
             }
             setText('')
             return
         }
-
+    
         if ((answers.answers.length+strikes.length-history.length)===0 ){
             setFinished('Won')
             setHeaderText('Winner')
             setRiddleHeaderClass(classes.winner)
             setHistory([])
-            setGuessHidden([classes.hidden])
-
+            setShowGuess(false)
+            
+    
         }
-
+    
         setText('')
         return
     }
