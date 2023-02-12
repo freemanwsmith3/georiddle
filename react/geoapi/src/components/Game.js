@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container';
@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-
+import axios from 'axios'
 import Riddle from './Riddle';
 import Results from './Results';
 import Strikes from './Strikes';
@@ -122,11 +122,6 @@ const useStyles = makeStyles((theme) => ({
         borderTop: '1px solid ',
     },
 
-    hidden :
-    {
-        display: 'none'
-    }
-
 
 }));
 
@@ -136,22 +131,36 @@ function toTitleCase(str) {
     }).join(' ');
   }
 
-const Game = (props) => {
 
-    const { answers, countries } = props;
+
+const Game = (props) => {
+    const { answers, countries, guesses } = props;
+    console.log("G: ", guesses)
+
     const [strikes] = useState([])
 	const [text, setText] = useState([])
     const [suggestions, setSuggestions] = useState([])
     const [history, setHistory] = useState([])
-    const [guessHidden, setGuessHidden] = useState([])
+    const [showGuess, setShowGuess] = useState(true)
     const [finished, setFinished] = useState([])
     const [boolError, setBoolError] = useState(false)
     const [helpertext, setHelpertext] = useState([])
     const [headerText, setHeaderText] = useState('Remaining: ' + (answers.answers.length+strikes.length-history.length) + ' Countries  || ' + (3 -strikes.length) + ' Strikes')
     
+    for (var i = 0; i < guesses.length; i++){
+        console.log("GIC", guesses[i].country)
+        axios.get('http://127.0.0.1:8000/api/countries/' + guesses[i].country)
+        .then(function (response) {
+
+            console.log("RDN", response.data.name)
+            afterSubmission(response.data.name);
+
+        })
+        console.log("OKOK: ", history)
+    }    
+    console.log("H: ", history)
     const classes = useStyles();
     const [riddleHeaderClass, setRiddleHeaderClass] = useState(classes.riddleNumberOfCountries)
-    
 
     const onSuggestHandler = (text)=>{
 
@@ -177,64 +186,72 @@ const Game = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         let submittedText = toTitleCase(text.trim())
+        afterSubmission(submittedText)
 
+    }
+
+    function afterSubmission(submittedText) {
         if (history.includes(submittedText)){
             setBoolError(true)
             setHelpertext('Already Guessed')
             return
         }
-
+    
         let countryValidation 
         countryValidation = countries.filter(country => {
-
+    
             const regex = new RegExp(`^${submittedText}$`, "i");
             return (country.name.match(regex))
         })
-
         if (countryValidation.length===0){
             setBoolError(true)
             setHelpertext('Enter a valid country')
             setText('')
-
             return
         }
         history.push(submittedText)
-
-
+        axios.post('http://127.0.0.1:8000/api/guesses/' + answers.id +'/', {
+        
+        'country': countryValidation[0].id
+          });
+    
         let isStrike = true
         for (var i = 0; i < answers.answers.length; i++){
             if (answers.answers[i].name === submittedText){
                 isStrike = false
+                
             }
-
+    
         }
-
+    
         if (isStrike === true){
             strikes.push(submittedText)
-
+    
             if  (strikes.length===3) {
                 setFinished('Lost')
                 setHeaderText('You Loser!')
                 setRiddleHeaderClass(classes.loser)
                 setHistory([])
-                setGuessHidden([classes.hidden])
+                setShowGuess(false)
             }
             setText('')
             return
         }
-
+    
         if ((answers.answers.length+strikes.length-history.length)===0 ){
             setFinished('Won')
             setHeaderText('Winner')
             setRiddleHeaderClass(classes.winner)
             setHistory([])
-            setGuessHidden([classes.hidden])
-
+            setShowGuess(false)
+            
+    
         }
-
+    
         setText('')
         return
-    }
+     }
+
 
 	if (!answers || answers.length === 0) return <p>Can not find any answers, sorry</p>;
 
@@ -250,7 +267,7 @@ const Game = (props) => {
             <Riddle answers={answers} countries={countries} strikes = {strikes} history = {history} finished = {finished} headerText = {headerText} classes = {classes} riddleHeaderClass = {riddleHeaderClass}/>
             <Results history = {history} answers = {answers}  finished = {finished} classes = {classes} />
             <Strikes strikes = {strikes} classes = {classes} />
-            <Container maxWidth="md" component="main" className={guessHidden}>
+            {showGuess && <Container maxWidth="md" component="main" >
                 <Card className={classes.listResults}>
                     <CardContent className={classes.listResults}>
 
@@ -290,7 +307,7 @@ const Game = (props) => {
                         </form>
                     </CardContent>
                 </Card>
-            </Container>
+            </Container>}
 		</React.Fragment>
 	);
 };

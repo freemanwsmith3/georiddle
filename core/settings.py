@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-lneh%0e^dr+3uv$6xi)r&cs4fev_ijpooo29$m%$a3jsyoyo_0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'http://localhost:3000']
+# SESSION_COOKIE_HTTPONLY = True
+# SESSION_COOKIE_AGE = 52560000
+# SESSION_COOKIE_SECURE = True
 
 
 # Application definition
@@ -75,6 +78,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+SESSION_COOKIE_SECURE= '.dev.localhost' #default use just to override your prod setting
+SESSION_COOKIE_DOMAIN= None  #default  use just to override your prod setting
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

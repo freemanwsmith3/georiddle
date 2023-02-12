@@ -11,19 +11,20 @@ function App() {
 	const CountriesLoading = CountriesLoadingComponent(Game)
 	// const RiddleLoading = RiddleLoadingComponent(Riddle)
 
-	const startDate = new Date('February 9, 2023 00:00:00');
+	const startDate = new Date('February 12, 2023 00:00:00');
 	const currentDate = new Date();
 
 	const riddleID = Math.ceil((currentDate-startDate)/86400000) // find the riddle id by subtracting the number of days, dividing by milliseconds and rounding up
 	const [appState, setAppState] = useState({
-		loadingAnswers: true,
-		loadingCountries: true,
+		loading: true,
 		countries: null,
-		answers: null
+		answers: null, 
+		guesses: null
 	});
 
 	useEffect(() => {
-		setAppState({ loadingAnswers: true,  loadingCountries: true });
+		
+		setAppState({loading: true});
 
 		//this is where you should load the answers or probably just get rid of it and use a custom hook
 
@@ -33,12 +34,13 @@ function App() {
 		// }
 		// loadAnswers();
 
-		const loadCountries = async () => {
-			const countryData = await axios.get('http://127.0.0.1:8000/api/countries/')
-			const answerData = await axios.get('http://127.0.0.1:8000/api/riddles/' + riddleID)
-			setAppState({ loadingCountries: false, answers: answerData.data, countries: countryData.data});
+		const loadData = async () => {
+			const countryData = await axios.get('http://127.0.0.1:8000/api/countries/');
+			const guessData = await axios.get('http://127.0.0.1:8000/api/guesses/' + riddleID);
+			const answerData = await axios.get('http://127.0.0.1:8000/api/riddles/' + riddleID);
+			setAppState({ loading: false, answers: answerData.data, countries: countryData.data, guesses: guessData.data});
 		}
-		loadCountries();
+		loadData();
 
 	},[setAppState]);
 
@@ -47,7 +49,7 @@ function App() {
 		<div className="App">
 			{/* <RiddleLoading isLoading={appState.loadingAnswers} answers={appState.answers}/> */}
 			{/* <AnswersLoading isLoading={appState.loadingCountries} answers={appState.answers} countries={appState.countries}/> */}
-			<CountriesLoading isLoading={appState.loadingCountries} answers={appState.answers} countries={appState.countries}/>
+			<CountriesLoading isLoading={appState.loading} answers={appState.answers} countries={appState.countries} guesses={appState.guesses}/>
 		</div>
 		
 	);

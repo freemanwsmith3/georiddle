@@ -14,6 +14,8 @@ class Capital(models.Model):
     def __str__ (self):
         return self.name
 
+
+
 class Country(models.Model):
 
     class CountryObjects(models.Manager):
@@ -52,3 +54,10 @@ class Riddle(models.Model):
     question = models.CharField(max_length=1000)
     answers = models.ManyToManyField(Country)
     date = models.DateField()
+
+class Guess(models.Model):
+    user = models.CharField(max_length=50)
+    country = models.ForeignKey(
+        Country, on_delete=models.PROTECT)
+    riddle = models.ForeignKey(
+        Riddle, on_delete=models.PROTECT)

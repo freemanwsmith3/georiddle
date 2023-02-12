@@ -12,3 +12,5 @@ admin.site.register(models.Capital)
 
 
 admin.site.register(models.Riddle)
+
+admin.site.register(models.Guess)
