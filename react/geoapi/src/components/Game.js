@@ -250,7 +250,7 @@ const Game = (props) => {
             <Riddle answers={answers} countries={countries} strikes = {strikes} history = {history} finished = {finished} headerText = {headerText} classes = {classes} riddleHeaderClass = {riddleHeaderClass}/>
             <Results history = {history} answers = {answers}  finished = {finished} classes = {classes} />
             <Strikes strikes = {strikes} classes = {classes} />
-            <Container maxWidth="md" component="main" className={guessHidden}>
+            {showGuess && <Container maxWidth="md" component="main" >
                 <Card className={classes.listResults}>
                     <CardContent className={classes.listResults}>
 
@@ -290,7 +290,7 @@ const Game = (props) => {
                         </form>
                     </CardContent>
                 </Card>
-            </Container>
+            </Container>}
 		</React.Fragment>
 	);
 };
