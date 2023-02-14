@@ -3,6 +3,10 @@ To Do:
 
 fix the makestyles warning and keyprop
 
+
+Multi host cookie issue solved with proxies in packages.json
+https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

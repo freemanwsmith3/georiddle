@@ -34,8 +34,8 @@ function App() {
 		// loadAnswers();
 
 		const loadCountries = async () => {
-			const countryData = await axios.get('http://127.0.0.1:8000/api/countries/')
-			const answerData = await axios.get('http://127.0.0.1:8000/api/riddles/' + riddleID)
+			const countryData = await axios.get('/api/countries/')
+			const answerData = await axios.get('/api/riddles/' + riddleID)
 			setAppState({ loadingCountries: false, answers: answerData.data, countries: countryData.data});
 		}
 		loadCountries();

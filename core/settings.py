@@ -25,8 +25,10 @@ SECRET_KEY = 'django-insecure-lneh%0e^dr+3uv$6xi)r&cs4fev_ijpooo29$m%$a3jsyoyo_0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
+#change in production
+ALLOWED_HOSTS = ["*"]
+########################
 
 # Application definition
 
@@ -134,10 +136,13 @@ REST_FRAMEWORK = {
     ]
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "https://georiddle.app",
-    "http://localhost:8080",
-    "http://localhost:3000",
-    "http://127.0.0.1:8000",
-    "http://127.0.0.1:3000",
-]
+### change to below in production
+CORS_ORIGIN_ALLOW_ALL = True
+
+# CORS_ALLOWED_ORIGINS = [
+#     "https://georiddle.app",
+#     "http://localhost:8080",
+#     "http://localhost:3000",
+#     "http://127.0.0.1:8000",
+#     "http://127.0.0.1:3000",
+# ]
