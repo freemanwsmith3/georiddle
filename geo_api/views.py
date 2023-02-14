@@ -28,31 +28,30 @@ class RiddleRetrieve(generics.RetrieveAPIView):
     def get_queryset(self, *args, **kwargs):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
+        
         riddleId = self.kwargs['pk']
+
         user = self.request.session.session_key
 
-
-        ######### for testing session data #
-        ######
-        ##############
-        
-        if not self.request.session.get('guess_data'):
-            guess_data_dict = {}
-            guess_data_dict['2'] = []
-            self.request.session['guess_data'] = guess_data_dict
-            print("DOesnt exist")
-        else:
-            guess_data_dict = self.request.session.get('guess_data')
-
-        guess_data_this_week = guess_data_dict['2']
-
-        guess_data_this_week.append('guessed cdddlder')
+        #### below i am checking to see if there is any guess dicitonary in the session for the user
+        # then checking if there is a riddle specific guess array
+        #this will be passed into the riddle to displayed already used guesses
+        # if not i am creating empty ones
+        #then saving them to the session with the modified command
         print(user)
-        print(guess_data_dict)
-        #############
-        # temporary user issue
-        ############
+        if str(riddleId) not in self.request.session.get('guess_data'):
+            riddle_guess = []
+            print("ok")
+            if self.request.session.get('guess_data'):
+                guess_data_dict = {}
+            else:
+                guess_data_dict = self.request.session.get('guess_data')
 
-        #user = 'hix5mm5xfmx0wp4lz3go5peohamu8xhb'
+            guess_data_dict[str(riddleId)] = riddle_guess
+            self.request.session['guess_data'][str(riddleId)] = guess_data_dict
+            
+        self.request.session.modified = True
+        print(self.request.session.get('guess_data')[str(riddleId)])
+
         return   Riddle.objects.all()
 
