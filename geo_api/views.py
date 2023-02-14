@@ -25,12 +25,17 @@ class RiddleRetrieve(generics.RetrieveAPIView):
     serializer_class = RiddleSerializer
     
 
-    def get_queryset(self):
+    def get_queryset(self,request):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
-
+        print(request)
         user = self.request.session.session_key
+        guess_data_dict = self.request.session.get('guess_data')
+
+        guess_data_this_week = guess_data_dict[str(1)]
+        guess_data_this_week.append('guessed countyr placeholder')
         print(user)
+        print(self.lookup_url_kwarg)
         #############
         # temporary user issue
         ############
