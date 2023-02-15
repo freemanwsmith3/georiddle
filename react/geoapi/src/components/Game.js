@@ -6,10 +6,12 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-
+import axios from 'axios'
 import Riddle from './Riddle';
 import Results from './Results';
 import Strikes from './Strikes';
+
+
 
 const useStyles = makeStyles((theme) => ({
 
@@ -199,8 +201,20 @@ const Game = (props) => {
 
             return
         }
-        history.push(submittedText)
 
+        history.push(submittedText)
+        // let config = {
+        //     headers: {
+        //       'Set-Cookie': 'sessionid=lw72b2vff48m0ivsdw6fiwuhxtwdruy2; expires=Wed, 01 Mar 2023 20:02:58 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax',
+        //     }
+        //   }
+          
+        axios.post('http://127.0.0.1:8000/api/riddles/' + answers.id +'/', {
+        
+        // Not sure if this tbelongs here
+        'country': submittedText
+          }, { withCredentials: true });
+    
 
         let isStrike = true
         for (var i = 0; i < answers.answers.length; i++){

@@ -4,8 +4,13 @@ To Do:
 fix the makestyles warning and keyprop
 
 
-Multi host cookie issue solved with proxies in packages.json
-https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react
+Multi host cookie issue solved. Number of issues: 
+-Axios needs (withCredentials) in the request
+-CSRF sites all need to be whitelisted in settings
+-BROSWER NEEDS TO BE SET TO 127.0..1:3000 NOT LOCAL HOST
+    -cookies being saved to that url
+
+https://yoongkang.com/blog/cookie-based-authentication-spa-django/
 
 # Getting Started with Create React App
 
