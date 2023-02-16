@@ -138,11 +138,33 @@ REST_FRAMEWORK = {
 
 ### change to below in production
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
-# CORS_ALLOWED_ORIGINS = [
-#     "https://georiddle.app",
-#     "http://localhost:8080",
-#     "http://localhost:3000",
-#     "http://127.0.0.1:8000",
-#     "http://127.0.0.1:3000",
-# ]
+CORS_ORIGIN_WHITELIST = (
+    "https://georiddle.app",
+    "http://localhost:8080",
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1"
+)
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://georiddle.app",
+    "http://localhost:8080",
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1"
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://georiddle.app",
+    "http://localhost:8080",
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1"
+]
+
+SESSION_COOKIE_HTTPONLY = False

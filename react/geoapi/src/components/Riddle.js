@@ -9,8 +9,17 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const Riddle = (props) => {
     
-    const {answers, headerText, classes, riddleHeaderClass} = props;
-    console.log(answers)
+    const {finished, answers,  classes, riddleHeaderClass, strikes, guesses} = props;
+    
+    let headerText = 'Remaining: ' + (answers.answers.length + strikes.length - guesses.length) + ' Countries || ' + (3-strikes.length) + ' Strikes';
+
+    if (finished === 'Lost'){
+        headerText = 'You Lost'
+    }
+    if (finished === 'Won'){
+        headerText = 'Winner'
+    }
+    
 
     return (
     <React.Fragment>
