@@ -12,7 +12,6 @@ import Results from './Results';
 import Strikes from './Strikes';
 
 
-
 const useStyles = makeStyles((theme) => ({
 
     riddleFirst: {
@@ -132,6 +131,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+
 function toTitleCase(str) {
     return str.toLowerCase().split(' ').map(function (word) {
       return (word.charAt(0).toUpperCase() + word.slice(1));
@@ -140,22 +140,61 @@ function toTitleCase(str) {
 
 const Game = (props) => {
 
-    const { answers, countries } = props;
+    const { answers, countries, guesses } = props;
     const [strikes] = useState([])
 	const [text, setText] = useState([])
+    const [correctAnswers] = useState([])
     const [showGuess, setShowGuess] = useState([])
     const [suggestions, setSuggestions] = useState([])
-    const [history, setHistory] = useState([])
-    const [guessHidden, setGuessHidden] = useState([])
-    const [finished, setFinished] = useState([])
+    const [history, setHistory] = useState(guesses)
+    const [finished, setFinished] = useState('Not Finished')
     const [boolError, setBoolError] = useState(false)
     const [helpertext, setHelpertext] = useState([])
-    const [headerText, setHeaderText] = useState('Remaining: ' + (answers.answers.length+strikes.length-history.length) + ' Countries  || ' + (3 -strikes.length) + ' Strikes')
-    
     const classes = useStyles();
     const [riddleHeaderClass, setRiddleHeaderClass] = useState(classes.riddleNumberOfCountries)
-    
 
+
+    function lost() {
+        setFinished('Lost')
+        setRiddleHeaderClass(classes.loser)
+        setHistory([])
+        setShowGuess(false)
+    }
+
+    function won() {
+        setFinished('Won')
+        setRiddleHeaderClass(classes.winner)
+        setHistory([])
+        setShowGuess(false)
+    }
+
+     
+    // Filling out answers
+    if (correctAnswers.length===0){
+        for (var i = 0; i < answers.answers.length; i++){
+            correctAnswers.push(answers.answers[i].name)
+            }
+    }
+
+
+    // Filling out strikes and checking if they have already lost,
+    //Then also checking if theyve already won
+    if (strikes.length===0 && finished==='Not Finished'){
+        for (var i = 0; i < guesses.length; i++){
+            if (!correctAnswers.includes(guesses[i])){
+                strikes.push(guesses[i])
+            }
+            if  (strikes.length===3) {
+                lost()
+            }
+        if ((answers.answers.length + strikes.length - guesses.length) === 0){
+            won();
+        }
+        }
+
+    }
+
+    
     const onSuggestHandler = (text)=>{
 
         setText(text);
@@ -203,19 +242,14 @@ const Game = (props) => {
         }
 
         history.push(submittedText)
-        // let config = {
-        //     headers: {
-        //       'Set-Cookie': 'sessionid=lw72b2vff48m0ivsdw6fiwuhxtwdruy2; expires=Wed, 01 Mar 2023 20:02:58 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax',
-        //     }
-        //   }
+
           
-        axios.post('http://127.0.0.1:8000/api/riddles/' + answers.id +'/', {
+        axios.post('http://127.0.0.1:8000/api/guesses/' + answers.id +'/', {
         
         // Not sure if this tbelongs here
         'country': submittedText
           }, { withCredentials: true });
     
-
         let isStrike = true
         for (var i = 0; i < answers.answers.length; i++){
             if (answers.answers[i].name === submittedText){
@@ -224,27 +258,19 @@ const Game = (props) => {
 
         }
 
+        
         if (isStrike === true){
             strikes.push(submittedText)
     
             if  (strikes.length===3) {
-                setFinished('Lost')
-                setHeaderText('You Loser!')
-                setRiddleHeaderClass(classes.loser)
-                setHistory([])
-                setShowGuess(false)
+                lost()
             }
             setText('')
             return
         }
     
         if ((answers.answers.length+strikes.length-history.length)===0 ){
-            setFinished('Won')
-            setHeaderText('Winner')
-            setRiddleHeaderClass(classes.winner)
-            setHistory([])
-            setShowGuess(false)
-            
+            won();
     
         }
     
@@ -263,7 +289,7 @@ const Game = (props) => {
 	return (
 		<React.Fragment>
             {/* <Riddle answers={answers} countries={countries} strikes = {strikes} history = {history} finish = {finished}/> */}
-            <Riddle answers={answers} countries={countries} strikes = {strikes} history = {history} finished = {finished} headerText = {headerText} classes = {classes} riddleHeaderClass = {riddleHeaderClass}/>
+            <Riddle answers={answers} countries={countries} strikes = {strikes}  finished = {finished} classes = {classes} riddleHeaderClass = {riddleHeaderClass} guesses = {guesses}/>
             <Results history = {history} answers = {answers}  finished = {finished} classes = {classes} />
             <Strikes strikes = {strikes} classes = {classes} />
             {showGuess && <Container maxWidth="md" component="main" >
