@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-lneh%0e^dr+3uv$6xi)r&cs4fev_ijpooo29$m%$a3jsyoyo_0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 #change in production
@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
    'default': {
    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-   'NAME': os.environ.get('AZURE_POSTGRESQL_NAME', ''),
-   'USER': os.environ.get('AZURE_POSTGRESQL_USER', ''),
-   'PASSWORD': os.environ.get('AZURE_POSTGRESQL_PASSWORD', ''),
-   'HOST': os.environ.get('AZURE_POSTGRESQL_HOST', ''),
-   'PORT': os.environ.get('AZURE_POSTGRESQL_PORT', ''),
+   'NAME': 'postgres',
+   'USER': 'freemanwsmith3',
+   'PASSWORD': 'h5IiL86!VKYD',
+   'HOST': 'georiddlepg.postgres.database.azure.com',
+   'PORT': '5432'
   }
 }
 
