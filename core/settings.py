@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
    'default': {
    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-   'NAME': os.environ.get('AZURE_SQL_NAME', ''),
-   'USER': os.environ.get('AZURE_SQL_user', ''),
-   'PASSWORD': os.environ.get('AZURE_SQL_PASSWORD', ''),
-   'HOST': os.environ.get('AZURE_SQL_HOST', ''),
-   'PORT': os.environ.get('AZURE_SQL_PORT', ''),
+   'NAME': os.environ.get('AZURE_POSTGRESQL_NAME', ''),
+   'USER': os.environ.get('AZURE_POSTGRESQL_USER', ''),
+   'PASSWORD': os.environ.get('AZURE_POSTGRESQL_PASSWORD', ''),
+   'HOST': os.environ.get('AZURE_POSTGRESQL_HOST', ''),
+   'PORT': os.environ.get('AZURE_POSTGRESQL_PORT', ''),
   }
 }
 
