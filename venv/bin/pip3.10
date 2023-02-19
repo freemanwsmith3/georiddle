@@ -1,4 +1,4 @@
-#!/home/fsmith/geoRiddle/geovenv/bin/python
+#!/home/fsmith/GeoRiddleGame/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
