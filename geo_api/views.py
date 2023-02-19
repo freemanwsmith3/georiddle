@@ -18,7 +18,7 @@ class CountryDetail(generics.RetrieveUpdateDestroyAPIView):
      
 class AnswerList(generics.ListAPIView):
     #permission_classes = [IsAdminUser]
-    queryset = Country.objects.filter(status= 'correct')
+    queryset = Country.objects.all()
     serializer_class = CountrySerializer
     
 class GuessList(APIView):
