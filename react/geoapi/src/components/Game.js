@@ -244,7 +244,7 @@ const Game = (props) => {
         history.push(submittedText)
 
           
-        axios.post('http://127.0.0.1:8000/api/guesses/' + answers.id +'/', {
+        axios.post('/api/guesses/' + answers.id +'/', {
         
         // Not sure if this tbelongs here
         'country': submittedText
