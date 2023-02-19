@@ -9,12 +9,11 @@ from geo.models import Country, Riddle
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
-        fields = ('id', 'name', 'continent', 'capital', 'status')
-
+        fields = ('id', 'name', 'continent', 'capital')
+        
 class RiddleSerializer(serializers.ModelSerializer):
     
     answers = CountrySerializer(read_only=True, many=True)
     class Meta:
         model = Riddle
-        fields = ('id', 'question', 'answers', 'date')
-
+        fields = ('id', 'question', 'answers')

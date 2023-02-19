@@ -88,7 +88,7 @@ DATABASES = {
    'NAME': 'postgres',
    'USER': 'freemanwsmith3',
    'PASSWORD': 'h5liL86!VKYD',
-   'HOST': 'georiddlepg.postgres.database.azure.com',
+   'HOST': 'georiddlepgserver.postgres.database.azure.com',
    'PORT': '5432'
   }
 }
