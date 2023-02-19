@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'GeoRiddle'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_286F99A4480949AAB4B68277FEDB6D8F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_383D0AED2486410195F78D1C72D79DD3 }}
