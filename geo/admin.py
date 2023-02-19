@@ -4,7 +4,7 @@ from . import models
 
 @admin.register(models.Country)
 class CountryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'id', 'status', 'capital', 'continent')
+    list_display = ('name', 'id', 'capital', 'continent')
 
 admin.site.register(models.Continent)
 

@@ -20,11 +20,6 @@ class Country(models.Model):
         def get_queryset(self):
             return super().get_queryset().filter()
 
-    options = (
-        ('correct', 'Correct'),
-        ('incorrect', 'Incorrect')
-    )
-
     continent = models.ForeignKey(
         Continent, on_delete=models.PROTECT, default=1)
 
@@ -33,9 +28,6 @@ class Country(models.Model):
 
     name = models.CharField(max_length=100)
 
-    status = models.CharField(
-        max_length=12, choices = options, default ='incorrect'
-    )
 
     objects = models.Manager() #default 
     countryobjects = CountryObjects() #custom 
@@ -51,4 +43,3 @@ class Riddle(models.Model):
 
     question = models.CharField(max_length=1000)
     answers = models.ManyToManyField(Country)
-    date = models.DateField()
