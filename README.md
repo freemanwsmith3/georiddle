@@ -1,7 +1,7 @@
 
 To Do:
 
-fix the makestyles warning and keyprop
+You just moved react to static, maybe that will help things, not sure
 
 
 Multi host cookie issue solved. Number of issues: 
