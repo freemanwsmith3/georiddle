@@ -145,6 +145,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = (
+    "https://reactgeoriddle.azurewebsites.net",
     "https://georiddle.app",
     "http://localhost:8080",
     "http://localhost:3000",
@@ -154,6 +155,7 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 CSRF_TRUSTED_ORIGINS = [
+    "https://reactgeoriddle.azurewebsites.net",
     "https://georiddle.app",
     "http://localhost:8080",
     "http://localhost:3000",
@@ -163,6 +165,7 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
+    "https://reactgeoriddle.azurewebsites.net",
     "https://georiddle.app",
     "http://localhost:8080",
     "http://localhost:3000",
