@@ -50,10 +50,8 @@ class GuessList(APIView):
         uniqueGuesses=set(this_weeks_guesses)
         uniqueGuesses.add(guessed_country)
         this_weeks_guesses = list(uniqueGuesses)
-        print(type(this_weeks_guesses))
         guess_data_dict[str(riddleId)] = this_weeks_guesses
-        print('request data: ', guessed_country)
-        print("g: ", guess_data_dict)
+
         self.request.session['guess_data'] = guess_data_dict
         self.request.session.modified = True
         return Response(status=status.HTTP_201_CREATED)    

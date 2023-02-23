@@ -145,7 +145,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = (
-    "https://reactgeoriddle.azurewebsites.net",
+    "https://gray-smoke-06a446210.2.azurestaticapps.net",
+    "https://georiddle.azurewebsites.net",
     "https://georiddle.app",
     "http://localhost:8080",
     "http://localhost:3000",
@@ -155,7 +156,8 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://reactgeoriddle.azurewebsites.net",
+    "https://gray-smoke-06a446210.2.azurestaticapps.net",
+    "https://georiddle.azurewebsites.net",    
     "https://georiddle.app",
     "http://localhost:8080",
     "http://localhost:3000",
@@ -165,7 +167,8 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://reactgeoriddle.azurewebsites.net",
+    "https://gray-smoke-06a446210.2.azurestaticapps.net",
+    "https://georiddle.azurewebsites.net",
     "https://georiddle.app",
     "http://localhost:8080",
     "http://localhost:3000",
@@ -173,5 +176,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://127.0.0.1"
 ]
+
 
 SESSION_COOKIE_HTTPONLY = False
