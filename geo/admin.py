@@ -10,5 +10,8 @@ admin.site.register(models.Continent)
 
 admin.site.register(models.Capital)
 
+admin.site.register(models.Language)
+
+admin.site.register(models.Region)
 
 admin.site.register(models.Riddle)
