@@ -88,12 +88,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
    'default': {
-   'ENGINE': 'django.db.backends.postgresql_psycopg2',
-   'NAME': 'postgres',
-   'USER': 'freemanwsmith3',
+   'ENGINE': os.environ['ENGINE'],
+   'NAME': os.environ['NAME'],
+   'USER': os.environ['USER'],
    'PASSWORD': os.environ['PASSWORD'],
-   'HOST': 'georiddlepgserver.postgres.database.azure.com',
-   'PORT': '5432'
+   'HOST': os.environ['HOST'],
+   'PORT': os.environ['PORT'],
   }
 }
 
