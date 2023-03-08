@@ -60,4 +60,3 @@ jobs:
           app-name: 'GeoRiddle'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_383D0AED2486410195F78D1C72D79DD3 }}
-          PASSWORD: ${{ secrets.PASSWORD }}
