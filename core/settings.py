@@ -92,7 +92,7 @@ DATABASES = {
    'NAME': 'postgres',
    'USER': 'freemanwsmith3',
    'PASSWORD': os.environ.get('PASSWORD'),
-   'HOST': os.environ.get('HOST'),
+   'HOST': 'georiddlepgserver.postgres.database.azure.com',
    'PORT': '5432'
   }
 }
