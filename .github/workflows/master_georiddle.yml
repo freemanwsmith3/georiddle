@@ -13,8 +13,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env: # Or as an environment variable
-      PASSWORD: ${{ secrets.PASSWORD }}
     steps:
       - uses: actions/checkout@v2
 
@@ -63,5 +61,3 @@ jobs:
           app-name: 'GeoRiddle'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_383D0AED2486410195F78D1C72D79DD3 }}
-        env: # Or as an environment variable
-          PASSWORD: ${{ secrets.PASSWORD }}
