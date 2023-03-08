@@ -30,6 +30,9 @@ jobs:
         run: |
           touch .env
           cat .env
+        env:
+          PASSWORD: ${{ secrets.PASSWORD }}
+          HOST: ${{ secrets.HOST }}
       - name: Install dependencies
         run: pip install -r requirements.txt
 
