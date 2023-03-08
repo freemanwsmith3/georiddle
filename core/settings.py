@@ -12,9 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
-from azure.keyvault.secrets import SecretClient
-from azure.identity import DefaultAzureCredential
-import pyodbc
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -92,7 +90,7 @@ DATABASES = {
    'ENGINE': 'django.db.backends.postgresql_psycopg2',
    'NAME': 'postgres',
    'USER': 'freemanwsmith3',
-   'PASSWORD': os.environ['PASSWORD'],
+   'PASSWORD': config('PASSWORD'),
    'HOST': 'georiddlepgserver.postgres.database.azure.com',
    'PORT': '5432'
   }
