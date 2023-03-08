@@ -26,11 +26,6 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-      - name: 'Create env file'
-        run: |
-          touch .env
-          echo PASSWORD=${{ secrets.PASSWORD }} >> .env
-          cat .env
       - name: Install dependencies
         run: pip install -r requirements.txt
 
@@ -50,18 +45,14 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
+      PASSWORD: ${{ secrets.PASSWORD }
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
           name: python-app
           path: .
-      - name: 'Create env file'
-        run: |
-          touch .env
-          echo PASSWORD=${{ secrets.PASSWORD }} >> .env
-          cat .env
+
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
@@ -69,4 +60,4 @@ jobs:
           app-name: 'GeoRiddle'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_383D0AED2486410195F78D1C72D79DD3 }}
-
+          
