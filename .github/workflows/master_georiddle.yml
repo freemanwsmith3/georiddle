@@ -48,6 +48,7 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
       
     steps:
+    
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
@@ -57,9 +58,9 @@ jobs:
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
-        env: 
-          PASSWORD: ${{ env.PASSWORD }}
         with:
           app-name: 'GeoRiddle'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_383D0AED2486410195F78D1C72D79DD3 }}
+        env: # Or as an environment variable
+          PASSWORD: ${{ secrets.PASSWORD }}
