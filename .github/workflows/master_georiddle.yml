@@ -33,9 +33,6 @@ jobs:
       - name: 'Create env file'
         run: |
           touch .env
-          echo PASSWORD=${{ secrets.PASSWORD }} >> .env
-          echo HOST=${{ secrets.HOST }} >> .env
-          
           cat .env
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
       
