@@ -29,10 +29,9 @@ jobs:
       - name: 'Create env file'
         run: |
           touch .env
+          echo PASSWORD=${{ secrets.PASSWORD }} >> .env
+          echo HOST: ${{ secrets.HOST }} >> .env
           cat .env
-        env:
-          PASSWORD: ${{ secrets.PASSWORD }}
-          HOST: ${{ secrets.HOST }}
       - name: Install dependencies
         run: pip install -r requirements.txt
 
@@ -59,7 +58,12 @@ jobs:
         with:
           name: python-app
           path: .
-          
+      - name: 'Create env file'
+        run: |
+          touch .env
+          echo PASSWORD=${{ secrets.PASSWORD }} >> .env
+          echo HOST: ${{ secrets.HOST }} >> .env
+          cat .env
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
