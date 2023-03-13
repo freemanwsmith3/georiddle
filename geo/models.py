@@ -82,10 +82,8 @@ class Country(models.Model):
     
 class Riddle(models.Model):
 
-
+    day = models.IntegerField(null=True)
     question = models.CharField(max_length=1024)
     answers = models.ManyToManyField(Country)
 
-    def __str__(self):
-        return self.name
 
