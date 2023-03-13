@@ -60,11 +60,11 @@ class GuessList(APIView):
 class RiddleRetrieve(generics.RetrieveAPIView):
     #permission_classes = [IsAdminUser]
     serializer_class = RiddleSerializer
-    
+    lookup_field = 'day'
 
     def get_queryset(self, *args, **kwargs):
 
-        riddleId = self.kwargs['pk']
+        riddleId = self.kwargs['day']
         intitializeGuessData(self, riddleId)
 
 

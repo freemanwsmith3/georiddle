@@ -16,4 +16,4 @@ class RiddleSerializer(serializers.ModelSerializer):
     answers = CountrySerializer(read_only=True, many=True)
     class Meta:
         model = Riddle
-        fields = ('id', 'question', 'answers')
+        fields = ('id', 'question', 'answers', 'day')
