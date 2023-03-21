@@ -197,10 +197,15 @@ for region in region_set:
 
 
 for country in data:
-    print("======================")
+    not_countries = ['Aruba', 'Heard Island and McDonald Islands', 'Anguilla', 'Åland Islands', 'Jersey', 'American Samoa', 'Turks and Caicos Islands', 'Antarctica', 'French Southern and Antarctic Lands', 'Saint Barthélemy', 'Bouvet Island', 'Cocos (Keeling) Islands', 'Cook Islands', 'Curaçao', 'Christmas Island', 'Cayman Islands', 'Western Sahara', 'Falkland Islands', 'Faroe Islands', 'Guernsey', 'Gibraltar', 'Guadeloupe', 'Guam', 'Hong Kong', ' Heard Island and McDonald Islands', 'Isle of Man',  'British Indian Ocean Territory', 'Macau', 'Saint Martin', 'Northern Mariana Islands', 'Montserrat', 'Martinique', 'Mayotte', 'New Caledonia', 'Norfolk Island', 'Niue', 'Pitcairn Islands', 'Puerto Rico', 'French Polynesia', 'Réunion', 'South Georgia', 'Svalbard and Jan Mayen', 'Saint Pierre and Miquelon', 'Sint Maarten', 'Tokelau', 'Wallis and Futuna', 'United States Minor Outlying Islands', 'British Virgin Islands', 'United States Virgin Islands' ]
+    name = country['name']['common']
+    if name in not_countries:
+        print(name)
+        continue
+    # print("======================")
     
     #################### name ####################3
-    name = country['name']['common']
+
     
     ############## code #################
     code = country['cca3']
@@ -250,38 +255,47 @@ for country in data:
 
     borders = country['borders']
 
+   
+    
+    # print("Capital_id: ", capital_id)
+    # print("continent_id: ", continent_id)
+    # print("region_id: ", region_id)
+    # print("currency_id: ", currency_id)
+    # print("area: ", area)
+    # print("code: ", code)
+    # print("lat: ", lat)
+    # print("long: ", long)
+    # print("landlocked: ", landlocked)
 
-    print("Name: ", name)
-    print("Capital_id: ", capital_id)
-    print("continent_id: ", continent_id)
-    print("region_id: ", region_id)
-    print("currency_id: ", currency_id)
-    print("area: ", area)
-    print("code: ", code)
-    print("lat: ", lat)
-    print("long: ", long)
-    print("landlocked: ", landlocked)
-
-    for lang in country['languages']:
-        print(lang)
-        lang_id = language_dict.get(country['languages'][lang])
-        upload_country_langs(curr, country_dict.get(code), lang_id)
 
 
     ############ uncomment these if you need to upload the individual stuff again ##############
     ########## doesn't affect it but slows it down because has to do a select statement ##################'
+    
+    curr.execute("""SELECT code FROM public.geo_country;""")
+    country_codes =  curr.fetchall()
+
+    # for lang in country['languages']:
+    #     print(lang)
+    #     lang_id = language_dict.get(country['languages'][lang])
+    #     upload_country_langs(curr, country_dict.get(code), lang_id)
+
     # for bord in borders:
-
-    #     print("bord", bord)
-    #     upload_borders(curr, country_dict.get(code), country_dict.get(bord))
-
+    #     if country_dict.get(code) not in country_codes or country_dict.get(bord) not in country_codes:
+    #         continue
+    #         print("bord", bord)
+    #     try:
+    #         upload_borders(curr, country_dict.get(code), country_dict.get(bord))
+    #     except Exception as e:
+    #         print(name)
+    #         print(e)
     #upload_countries(curr, name, capital_id, continent_id, region_id, currency_id, area, code, lat, long, landlocked)
     # upload_regions(curr, country['subregion'])
     # if country['currency'] != []:
     #     currency = country['currency'][0]
     #     print(currency)
     #     upload_currency(curr, currency)
-    # upload_capitals(curr, capital)
+    #upload_capitals(curr, capital)
     # upload_continent(curr, continent)
   
 # for lang in languages:
