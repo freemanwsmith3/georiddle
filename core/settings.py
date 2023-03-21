@@ -192,7 +192,7 @@ SESSION_ENGINE  = "django.contrib.sessions.backends.signed_cookies"
 ### maybe need this in addition to thing below
 SESSION_COOKIE_SECURE = True
 
-SESSION_COOKIE_SAMESITE= 'Lax'
+SESSION_COOKIE_SAMESITE= 'None'
 
 
 CSRF_COOKIE_SAMESITE = 'None'
