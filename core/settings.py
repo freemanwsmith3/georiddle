@@ -180,6 +180,13 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1"
 ]
 
+###########
+# this is what got sessions to work on chrome maybe
+SESSION_ENGINE  = "django.contrib.sessions.backends.signed_cookies"
+#################
+
+
+
 # CSRF_COOKIE_SECURE = True
 # SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'None'
