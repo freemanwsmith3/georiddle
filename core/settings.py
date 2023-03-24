@@ -24,23 +24,24 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-lneh%0e^dr+3uv$6xi)r&cs4fev_ijpooo29$m%$a3jsyoyo_0'
+SECRET_KEY = 'django-insecure-lneh%0e^dr+3uv$6xi)r&cs4fev_ijpooo29$m%$a3jsyoyo_0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = False
 
+ALLOWED_HOSTS = ['*']
 
-ALLOWED_HOSTS = [
-     "https://gray-smoke-06a446210.2.azurestaticapps.net",
-    "https://georiddle.azurewebsites.net",
-    "https://georiddle.app",
-    "http://localhost:8080",
-    "http://localhost:3000",
-    "http://127.0.0.1:8000",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1"
-]
+# ALLOWED_HOSTS = [
+#      "https://gray-smoke-06a446210.2.azurestaticapps.net",
+#     "https://georiddle.azurewebsites.net",
+#     "https://georiddle.app",
+#     "http://localhost:8080",
+#     "http://localhost:3000",
+#     "http://127.0.0.1:8000",
+#     "http://127.0.0.1:3000",
+#     "http://127.0.0.1"
+# ]
 ########################
 
 # Application definition
