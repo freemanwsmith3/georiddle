@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #SECRET_KEY = 'django-insecure-lneh%0e^dr+3uv$6xi)r&cs4fev_ijpooo29$m%$a3jsyoyo_0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-SECRET_KEY = "<SECRET_KEY>"
+SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
@@ -97,27 +97,27 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 
 
-DATABASES = {
-   'default': {
-   'ENGINE': 'django.db.backends.postgresql_psycopg2',
-   'NAME': '<DATABASE_NAME>',
-   'USER': '<DATABASE_USER>',
-   'PASSWORD': '<DATABASE_PASSWORD>',
-   'HOST': '<DATABASE_HOST>',
-   'PORT': '<DATABASE_PORT>'
-  }
-}
-
 # DATABASES = {
 #    'default': {
 #    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#    'NAME': 'postgres',
-#    'USER': 'freemanwsmith3',
-#    'PASSWORD': 'h5liL86!VKYD',
-#    'HOST': 'georiddlepgserver.postgres.database.azure.com',
-#    'PORT': '5432'
+#    'NAME': '<DATABASE_NAME>',
+#    'USER': '<DATABASE_USER>',
+#    'PASSWORD': '<DATABASE_PASSWORD>',
+#    'HOST': '<DATABASE_HOST>',
+#    'PORT': '<DATABASE_PORT>'
 #   }
 # }
+
+DATABASES = {
+   'default': {
+   'ENGINE': 'django.db.backends.postgresql_psycopg2',
+   'NAME': 'postgres',
+   'USER': 'freemanwsmith3',
+   'PASSWORD': 'h5liL86!VKYD',
+   'HOST': 'georiddlepgserver.postgres.database.azure.com',
+   'PORT': '5432'
+  }
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
