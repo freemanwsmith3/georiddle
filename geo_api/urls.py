@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CountryList, CountryDetail, AnswerList, RiddleRetrieve, GuessList
+from .views import CountryList, AnswerList, RiddleRetrieve
 
 app_name = 'geo_api'
 

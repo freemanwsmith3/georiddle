@@ -191,8 +191,7 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://georiddle.azurewebsites.net/api/riddles/"
-    "https://georiddle.azurewebsites.net/api/countries/"
+
     "https://www.gray-smoke-06a446210.2.azurestaticapps.net",
     "https://gray-smoke-06a446210.2.azurestaticapps.net",
     "https://www.georiddle.azurewebsites.net",
