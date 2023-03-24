@@ -32,21 +32,10 @@ DEBUG = False
 # ALLOWED_HOSTS = ['*']
 
 ALLOWED_HOSTS = [
-    "www.georiddle.app",
-    "georiddle.app",
-    "www.georiddle.azurewebsites.net",
-    "georiddle.azurewebsites.net"
-    "https://www.gray-smoke-06a446210.2.azurestaticapps.net",
-    "https://gray-smoke-06a446210.2.azurestaticapps.net",
-    "https://www.georiddle.azurewebsites.net",
-    "https://georiddle.azurewebsites.net",
-    "https://www.georiddle.app",
-    "https://georiddle.app",
-    "http://localhost:8080",
-    "http://localhost:3000",
+    ".georiddle.app",
+    ".georiddle.azurewebsites.net",
     "localhost"
     "127.0.0.1",
-    "http://127.0.0.1"
 ]
 ########################
 
