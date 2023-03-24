@@ -24,27 +24,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-lneh%0e^dr+3uv$6xi)r&cs4fev_ijpooo29$m%$a3jsyoyo_0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = False
 
-# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']
 
-ALLOWED_HOSTS = [
-    "https://www.gray-smoke-06a446210.2.azurestaticapps.net",
-    "https://gray-smoke-06a446210.2.azurestaticapps.net",
-    "https://www.georiddle.azurewebsites.net",
-    "https://georiddle.azurewebsites.net",
-    "https://www.georiddle.app",
-    "https://georiddle.app",
-    "http://localhost:8080",
-    "http://localhost:3000",
-    "http://127.0.0.1:8000",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1"
-]
+# ALLOWED_HOSTS = [
+#     "https://www.gray-smoke-06a446210.2.azurestaticapps.net",
+#     "https://gray-smoke-06a446210.2.azurestaticapps.net",
+#     "https://www.georiddle.azurewebsites.net",
+#     "https://georiddle.azurewebsites.net",
+#     "https://www.georiddle.app",
+#     "https://georiddle.app",
+#     "http://localhost:8080",
+#     "http://localhost:3000",
+#     "http://127.0.0.1:8000",
+#     "http://127.0.0.1:3000",
+#     "http://127.0.0.1"
+# ]
 ########################
 
 # Application definition
@@ -156,7 +155,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-### change to below in production
 
 
 CORS_ORIGIN_WHITELIST = [
@@ -191,24 +189,3 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://127.0.0.1"
 ]
-
-###########
-# this is what got sessions to work on chrome temporarily local host 3001
-SESSION_ENGINE  = "django.contrib.sessions.backends.signed_cookies"
-#################
-
-
-
-# CSRF_COOKIE_SECURE = True
-
-### maybe need this in addition to thing below
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE= None
-CSRF_COOKIE_SAMESITE = None
-
-
-SESSION_COOKIE_HTTPONLY = False
-CORS_ORIGIN_ALLOW_ALL = True
-
-CORS_ALLOW_CREDENTIALS = True
