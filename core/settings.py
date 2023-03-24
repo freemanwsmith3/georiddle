@@ -156,16 +156,12 @@ REST_FRAMEWORK = {
     ]
 }
 
+### change to below in production
 
 
 CORS_ORIGIN_WHITELIST = [
-    "https://georiddle.azurewebsites.net/api/riddles/"
-    "https://georiddle.azurewebsites.net/api/countries/"
-    "https://www.gray-smoke-06a446210.2.azurestaticapps.net",
-    "https://gray-smoke-06a446210.2.azurestaticapps.net",
-    "https://www.georiddle.azurewebsites.net",
+     "https://gray-smoke-06a446210.2.azurestaticapps.net",
     "https://georiddle.azurewebsites.net",
-    "https://www.georiddle.app",
     "https://georiddle.app",
     "http://localhost:8080",
     "http://localhost:3000",
@@ -175,13 +171,8 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://georiddle.azurewebsites.net/api/riddles/"
-    "https://georiddle.azurewebsites.net/api/countries/"
-    "https://www.gray-smoke-06a446210.2.azurestaticapps.net",
     "https://gray-smoke-06a446210.2.azurestaticapps.net",
-    "https://www.georiddle.azurewebsites.net",
     "https://georiddle.azurewebsites.net",
-    "https://www.georiddle.app",
     "https://georiddle.app",
     "http://localhost:8080",
     "http://localhost:3000",
@@ -191,12 +182,8 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-
-    "https://www.gray-smoke-06a446210.2.azurestaticapps.net",
     "https://gray-smoke-06a446210.2.azurestaticapps.net",
-    "https://www.georiddle.azurewebsites.net",
     "https://georiddle.azurewebsites.net",
-    "https://www.georiddle.app",
     "https://georiddle.app",
     "http://localhost:8080",
     "http://localhost:3000",
@@ -205,5 +192,23 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1"
 ]
 
+###########
+# this is what got sessions to work on chrome temporarily local host 3001
+SESSION_ENGINE  = "django.contrib.sessions.backends.signed_cookies"
+#################
+
+
+
+# CSRF_COOKIE_SECURE = True
+
+### maybe need this in addition to thing below
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE= None
+CSRF_COOKIE_SAMESITE = None
+
+
+SESSION_COOKIE_HTTPONLY = False
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_CREDENTIALS = True
