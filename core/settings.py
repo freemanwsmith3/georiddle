@@ -28,11 +28,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 SECRET_KEY = "<SECRET_KEY>"
-DEBUG = True
+DEBUG = False
 
 
-#change in production
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+     "https://gray-smoke-06a446210.2.azurestaticapps.net",
+    "https://georiddle.azurewebsites.net",
+    "https://georiddle.app",
+    "http://localhost:8080",
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1"
+]
 ########################
 
 # Application definition
@@ -87,17 +95,29 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
+
+
 DATABASES = {
    'default': {
    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-   'NAME': 'postgres',
-   'USER': 'freemanwsmith3',
-   'PASSWORD': 'h5liL86!VKYD',
-   'HOST': 'georiddlepgserver.postgres.database.azure.com',
-   'PORT': '5432'
+   'NAME': '<DATABASE_NAME>',
+   'USER': '<DATABASE_USER>',
+   'PASSWORD': '<DATABASE_PASSWORD>',
+   'HOST': '<DATABASE_HOST>',
+   'PORT': '<DATABASE_PORT>'
   }
 }
 
+# DATABASES = {
+#    'default': {
+#    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#    'NAME': 'postgres',
+#    'USER': 'freemanwsmith3',
+#    'PASSWORD': 'h5liL86!VKYD',
+#    'HOST': 'georiddlepgserver.postgres.database.azure.com',
+#    'PORT': '5432'
+#   }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
