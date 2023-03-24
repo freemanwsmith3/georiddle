@@ -156,7 +156,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-### change to below in production
 
 
 CORS_ORIGIN_WHITELIST = [
@@ -192,23 +191,3 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1"
 ]
 
-###########
-# this is what got sessions to work on chrome temporarily local host 3001
-SESSION_ENGINE  = "django.contrib.sessions.backends.signed_cookies"
-#################
-
-
-
-# CSRF_COOKIE_SECURE = True
-
-### maybe need this in addition to thing below
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE= None
-CSRF_COOKIE_SAMESITE = None
-
-
-SESSION_COOKIE_HTTPONLY = False
-CORS_ORIGIN_ALLOW_ALL = True
-
-CORS_ALLOW_CREDENTIALS = True
