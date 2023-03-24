@@ -108,12 +108,14 @@ WSGI_APPLICATION = 'core.wsgi.application'
 #   }
 # }
 
+#   'PASSWORD': 'h5liL86!VKYD',
+
 DATABASES = {
    'default': {
    'ENGINE': 'django.db.backends.postgresql_psycopg2',
    'NAME': 'postgres',
    'USER': 'freemanwsmith3',
-   'PASSWORD': 'h5liL86!VKYD',
+   'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
    'HOST': 'georiddlepgserver.postgres.database.azure.com',
    'PORT': '5432'
   }
