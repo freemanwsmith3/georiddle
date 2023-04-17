@@ -19,6 +19,7 @@ class AnswerList(generics.ListAPIView):
     
 class Results(generics.ListCreateAPIView):
     
+    #idk why this matters
     queryset = Result.objects.all()
     
     
@@ -28,31 +29,25 @@ class Results(generics.ListCreateAPIView):
         
         #gets the individuals average
         indUserAve = Result.objects.filter(user='testuser').aggregate(avg= Avg('points'))['avg']
-        print(indUserAve)
-        print(Result.objects.filter(user='mom').aggregate(avg= Avg('points'))['avg'])
+
         #gets the users that rank above them
         userAveragesAbove = Result.objects.values('user').annotate(avg= Avg('points')).filter(avg__gt=indUserAve).values_list('user', flat=True).count()
-        
         #kinda inefficient to get the total this way, but just feels saver
         userAveragesBelow= Result.objects.values('user').annotate(avg= Avg('points')).values_list('user', flat=True).count()
-        
         percentile = int(round((100*userAveragesAbove/userAveragesBelow), 0))
-        print(percentile)
+
         data = {riddleDay:percentile}
         return Response( data = data, status=status.HTTP_200_OK)
 
 
     def post(self, request, riddleDay, **kwargs):
         try: 
-            print(riddleDay)
-            print(request.data)
+
             if 'won' not in request.data:
-                print('no')
                 won = False
             else:
-                print("hmm")
                 won = True
-            result = Result(id=request.data['id'], won = won, points = request.data['points'], day=riddleDay)
+            result = Result( won = won, points = request.data['points'], user = request.data['user'], day=riddleDay)
             result.save()
             return Response(ResultSerializer(result).data, status=status.HTTP_201_CREATED)
         except Exception as e:
