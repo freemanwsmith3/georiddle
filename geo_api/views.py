@@ -1,27 +1,64 @@
 from rest_framework import generics, status
-from geo.models import Country, Riddle
-from .serializers import CountrySerializer, RiddleSerializer
+from geo.models import Country, Riddle, Result
+from .serializers import CountrySerializer, RiddleSerializer, ResultSerializer
 from rest_framework.permissions import IsAdminUser
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import HttpResponse, JsonResponse
+from django.db.models import F, Sum, DecimalField, Avg
 
 class CountryList(generics.ListCreateAPIView):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
 
 
-# country detail no longer used
-# class CountryDetail(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Country.objects.all()
-#     serializer_class = CountrySerializer
-     
 class AnswerList(generics.ListAPIView):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
     
+class Results(generics.ListCreateAPIView):
+    
+    queryset = Result.objects.all()
+    
+    
+    serializer_class = ResultSerializer
 
+    def get(self, request, riddleDay, **kwargs):
+        
+        #gets the individuals average
+        indUserAve = Result.objects.filter(user='testuser').aggregate(avg= Avg('points'))['avg']
+        print(indUserAve)
+        print(Result.objects.filter(user='mom').aggregate(avg= Avg('points'))['avg'])
+        #gets the users that rank above them
+        userAveragesAbove = Result.objects.values('user').annotate(avg= Avg('points')).filter(avg__gt=indUserAve).values_list('user', flat=True).count()
+        
+        #kinda inefficient to get the total this way, but just feels saver
+        userAveragesBelow= Result.objects.values('user').annotate(avg= Avg('points')).values_list('user', flat=True).count()
+        
+        percentile = int(round((100*userAveragesAbove/userAveragesBelow), 0))
+        print(percentile)
+        data = {riddleDay:percentile}
+        return Response( data = data, status=status.HTTP_200_OK)
+
+
+    def post(self, request, riddleDay, **kwargs):
+        try: 
+            print(riddleDay)
+            print(request.data)
+            if 'won' not in request.data:
+                print('no')
+                won = False
+            else:
+                print("hmm")
+                won = True
+            result = Result(id=request.data['id'], won = won, points = request.data['points'], day=riddleDay)
+            result.save()
+            return Response(ResultSerializer(result).data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            print("Failed:", e)
+            return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
+        
 # Guess data no longer user
 
 
@@ -143,6 +180,5 @@ def intitializeGuessData(self, riddleId):
     #     guess_data_dict[str(riddleId)] = riddle_guess
     #     self.request.session['guess_data'][str(riddleId)] = guess_data_dict
         
-    
     
     

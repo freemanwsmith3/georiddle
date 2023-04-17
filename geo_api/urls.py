@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CountryList, AnswerList, RiddleRetrieve
+from .views import CountryList, AnswerList, RiddleRetrieve, Results
 
 app_name = 'geo_api'
 
@@ -9,4 +9,5 @@ urlpatterns = [
     path('countries/', CountryList.as_view(), name='listcreate'),
     path('riddles/<int:day>/', RiddleRetrieve.as_view(), name='riddleretrieve'),
     # path('guesses/<int:pk>/', GuessList.as_view(), name='guesslist'),
+    path('results/<int:riddleDay>/', Results.as_view(), name='results'),
 ]

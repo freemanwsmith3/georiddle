@@ -15,3 +15,5 @@ admin.site.register(models.Language)
 admin.site.register(models.Region)
 
 admin.site.register(models.Riddle)
+
+admin.site.register(models.Result)
