@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Continent(models.Model):
     name = models.CharField(max_length=100)
@@ -13,6 +14,19 @@ class Capital(models.Model):
 
     def __str__ (self):
         return self.name
+
+class Result(models.Model):
+    user = models.CharField(max_length=100, default=None, null=True)
+    won = models.BooleanField()
+    day = models.IntegerField(null=True)
+    points = models.IntegerField(
+        default=1,
+        validators=[
+            MaxValueValidator(10),
+            MinValueValidator(1)
+        ]
+
+    )
 
 class Region(models.Model):
     name = models.CharField(max_length=100)

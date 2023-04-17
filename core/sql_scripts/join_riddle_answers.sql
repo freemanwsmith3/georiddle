@@ -1,0 +1,1 @@
+select * from geo_country gc full join geo_riddle_answers gra ON gc.id = gra.country_id where gra.riddle_id =

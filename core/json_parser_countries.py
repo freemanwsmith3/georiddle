@@ -197,11 +197,12 @@ for region in region_set:
 
 
 for country in data:
-    not_countries = ['Aruba', 'Heard Island and McDonald Islands', 'Anguilla', 'Åland Islands', 'Jersey', 'American Samoa', 'Turks and Caicos Islands', 'Antarctica', 'French Southern and Antarctic Lands', 'Saint Barthélemy', 'Bouvet Island', 'Cocos (Keeling) Islands', 'Cook Islands', 'Curaçao', 'Christmas Island', 'Cayman Islands', 'Western Sahara', 'Falkland Islands', 'Faroe Islands', 'Guernsey', 'Gibraltar', 'Guadeloupe', 'Guam', 'Hong Kong', ' Heard Island and McDonald Islands', 'Isle of Man',  'British Indian Ocean Territory', 'Macau', 'Saint Martin', 'Northern Mariana Islands', 'Montserrat', 'Martinique', 'Mayotte', 'New Caledonia', 'Norfolk Island', 'Niue', 'Pitcairn Islands', 'Puerto Rico', 'French Polynesia', 'Réunion', 'South Georgia', 'Svalbard and Jan Mayen', 'Saint Pierre and Miquelon', 'Sint Maarten', 'Tokelau', 'Wallis and Futuna', 'United States Minor Outlying Islands', 'British Virgin Islands', 'United States Virgin Islands' ]
+    not_countries = ['Aruba', 'Heard Island and McDonald Islands', 'Bermuda',  'Anguilla', 'Åland Islands', 'Jersey', 'American Samoa', 'Turks and Caicos Islands', 'Antarctica', 'French Southern and Antarctic Lands', 'Saint Barthélemy', 'Bouvet Island', 'Cocos (Keeling) Islands', 'Cook Islands', 'Curaçao', 'Christmas Island', 'Cayman Islands', 'Western Sahara', 'Falkland Islands', 'Faroe Islands', 'Guernsey', 'Gibraltar', 'Guadeloupe', 'Guam', 'Hong Kong', ' Heard Island and McDonald Islands', 'Isle of Man',  'British Indian Ocean Territory', 'Macau', 'Saint Martin', 'Northern Mariana Islands', 'Montserrat', 'Martinique', 'Mayotte', 'New Caledonia', 'Norfolk Island', 'Niue', 'Pitcairn Islands', 'Puerto Rico', 'French Polynesia', 'Réunion', 'South Georgia', 'Svalbard and Jan Mayen', 'Saint Pierre and Miquelon', 'Sint Maarten', 'Tokelau', 'Wallis and Futuna', 'United States Minor Outlying Islands', 'British Virgin Islands', 'United States Virgin Islands' ]
     name = country['name']['common']
     if name in not_countries:
         print(name)
         continue
+
     # print("======================")
     
     #################### name ####################3
