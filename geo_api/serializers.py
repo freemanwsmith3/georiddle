@@ -21,4 +21,4 @@ class RiddleSerializer(serializers.ModelSerializer):
 class ResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = Result
-        fields = ('user', 'won', 'points','day')
+        fields = ('won', 'points','day')

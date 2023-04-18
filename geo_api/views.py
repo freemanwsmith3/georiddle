@@ -25,29 +25,32 @@ class Results(generics.ListCreateAPIView):
     
     serializer_class = ResultSerializer
 
-    def get(self, request, riddleDay, **kwargs):
-        
-        #gets the individuals average
-        indUserAve = Result.objects.filter(user='testuser').aggregate(avg= Avg('points'))['avg']
-
-        #gets the users that rank above them
-        userAveragesAbove = Result.objects.values('user').annotate(avg= Avg('points')).filter(avg__gt=indUserAve).values_list('user', flat=True).count()
-        #kinda inefficient to get the total this way, but just feels saver
-        userAveragesBelow= Result.objects.values('user').annotate(avg= Avg('points')).values_list('user', flat=True).count()
-        percentile = int(round((100*userAveragesAbove/userAveragesBelow), 0))
-
-        data = {riddleDay:percentile}
-        return Response( data = data, status=status.HTTP_200_OK)
-
-
-    def post(self, request, riddleDay, **kwargs):
+    def get(self, request, user, **kwargs):
         try: 
+            #gets the individuals average
+            indUserAve = Result.objects.filter(user=user).aggregate(avg= Avg('points'))['avg']
 
+            #gets the users that rank above them
+            userAveragesAbove = Result.objects.values('user').annotate(avg= Avg('points')).filter(avg__gt=indUserAve).values_list('user', flat=True).count()
+            #kinda inefficient to get the total this way, but just feels saver
+            userAveragesBelow= Result.objects.values('user').annotate(avg= Avg('points')).values_list('user', flat=True).count()
+            percentile = int(round((100*userAveragesAbove/userAveragesBelow), 0))
+
+            data = {user:percentile}
+            return Response( data = data, status=status.HTTP_200_OK)
+        except Exception as e:
+            print("Failed:", e)
+            return Response(request.data, status=status.HTTP_404_NOT_FOUND)
+        
+
+    def post(self, request, user, **kwargs):
+        try: 
+            print(request.data)
             if 'won' not in request.data:
                 won = False
             else:
                 won = True
-            result = Result( won = won, points = request.data['points'], user = request.data['user'], day=riddleDay)
+            result = Result( won = won, points = request.data['points'], user = user, day=request.data['day'])
             result.save()
             return Response(ResultSerializer(result).data, status=status.HTTP_201_CREATED)
         except Exception as e:
