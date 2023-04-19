@@ -1,0 +1,1 @@
+select * from geo_result gr2  where "user" in (SELECT "user" from geo_result gr  group by "user" having count(*)  >1) order by "user"

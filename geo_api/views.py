@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import HttpResponse, JsonResponse
-from django.db.models import F, Sum, DecimalField, Avg
+from django.db.models import F, Sum, DecimalField, Sum
 
 class CountryList(generics.ListCreateAPIView):
     queryset = Country.objects.all()
@@ -28,13 +28,14 @@ class Results(generics.ListCreateAPIView):
     def get(self, request, user, **kwargs):
         try: 
             #gets the individuals average
-            indUserAve = Result.objects.filter(user=user).aggregate(avg= Avg('points'))['avg']
+            indUserSum = Result.objects.filter(user=user).aggregate(sum= Sum('points'))['sum']
 
             #gets the users that rank above them
-            userAveragesAbove = Result.objects.values('user').annotate(avg= Avg('points')).filter(avg__gt=indUserAve).values_list('user', flat=True).count()
-            #kinda inefficient to get the total this way, but just feels saver
-            userAveragesBelow= Result.objects.values('user').annotate(avg= Avg('points')).values_list('user', flat=True).count()
+            userAveragesAbove = Result.objects.values('user').annotate(sum= Sum('points')).filter(sum__gt=indUserSum).values_list('user', flat=True).count()
+            #kinda inefficient to get the total this way, but just feels Sum
+            userAveragesBelow= Result.objects.values('user').annotate(sum= Sum('points')).values_list('user', flat=True).count()
             percentile = int(round((100*userAveragesAbove/userAveragesBelow), 0))
+            print(percentile)
 
             data = {user:percentile}
             return Response( data = data, status=status.HTTP_200_OK)
