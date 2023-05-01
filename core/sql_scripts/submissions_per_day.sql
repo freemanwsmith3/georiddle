@@ -1,0 +1,1 @@
+select "day", count(*) from geo_result gr2 group by "day" order by "day" desc

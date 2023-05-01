@@ -9,16 +9,16 @@ from geo.models import Country, Riddle, Result
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
-        fields = ('id', 'name', 'continent', 'capital')
+        fields = ('name',)
         
 class RiddleSerializer(serializers.ModelSerializer):
     
     answers = CountrySerializer(read_only=True, many=True)
     class Meta:
         model = Riddle
-        fields = ('id', 'question', 'answers', 'day')
+        fields = ('id', 'question', 'answers', 'day', 'sort')
 
 class ResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = Result
-        fields = ('won', 'points','day')
+        fields = ('won', 'points','day', 'month')

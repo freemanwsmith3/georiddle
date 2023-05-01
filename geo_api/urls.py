@@ -9,5 +9,5 @@ urlpatterns = [
     path('countries/', CountryList.as_view(), name='listcreate'),
     path('riddles/<int:day>/', RiddleRetrieve.as_view(), name='riddleretrieve'),
     # path('guesses/<int:pk>/', GuessList.as_view(), name='guesslist'),
-    path('results/<str:user>/', Results.as_view(), name='results'),
+    path('results/<str:month>/<str:user>/', Results.as_view(), name='results'),
 ]

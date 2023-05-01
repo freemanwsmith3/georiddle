@@ -1,5 +1,5 @@
 from rest_framework import generics, status
-from geo.models import Country, Riddle, Result
+from geo.models import Country2, Riddle, Result
 from .serializers import CountrySerializer, RiddleSerializer, ResultSerializer
 from rest_framework.permissions import IsAdminUser
 from django.shortcuts import get_object_or_404
@@ -9,12 +9,12 @@ from django.http import HttpResponse, JsonResponse
 from django.db.models import F, Sum, DecimalField, Sum
 
 class CountryList(generics.ListCreateAPIView):
-    queryset = Country.objects.all()
+    queryset = Country2.objects.all()
     serializer_class = CountrySerializer
 
 
 class AnswerList(generics.ListAPIView):
-    queryset = Country.objects.all()
+    queryset = Country2.objects.all()
     serializer_class = CountrySerializer
     
 class Results(generics.ListCreateAPIView):
@@ -25,17 +25,17 @@ class Results(generics.ListCreateAPIView):
     
     serializer_class = ResultSerializer
 
-    def get(self, request, user, **kwargs):
+    def get(self, request, month, user, **kwargs):
         try: 
             #gets the individuals average
-            indUserSum = Result.objects.filter(user=user).aggregate(sum= Sum('points'))['sum']
 
+            indUserSum = Result.objects.filter(user=user, month=month).aggregate(sum= Sum('points'))['sum']
+            
             #gets the users that rank above them
-            userAveragesAbove = Result.objects.values('user').annotate(sum= Sum('points')).filter(sum__gt=indUserSum).values_list('user', flat=True).count()
+            userAveragesAbove = Result.objects.filter(month=month).values('user').annotate(sum= Sum('points')).filter(sum__gt=indUserSum).values_list('user', flat=True).count()
             #kinda inefficient to get the total this way, but just feels Sum
-            userAveragesBelow= Result.objects.values('user').annotate(sum= Sum('points')).values_list('user', flat=True).count()
+            userAveragesBelow= Result.objects.filter(month=month).values('user').annotate(sum= Sum('points')).values_list('user', flat=True).count()
             percentile = int(round((100*userAveragesAbove/userAveragesBelow), 0))
-            print(percentile)
 
             data = {user:percentile}
             return Response( data = data, status=status.HTTP_200_OK)
@@ -44,14 +44,14 @@ class Results(generics.ListCreateAPIView):
             return Response(request.data, status=status.HTTP_404_NOT_FOUND)
         
 
-    def post(self, request, user, **kwargs):
+    def post(self, request, month, user, **kwargs):
         try: 
             print(request.data)
             if 'won' not in request.data:
                 won = False
             else:
                 won = True
-            result = Result( won = won, points = request.data['points'], user = user, day=request.data['day'])
+            result = Result( won = won, points = request.data['points'], user = user, day=request.data['day'], month=month)
             result.save()
             return Response(ResultSerializer(result).data, status=status.HTTP_201_CREATED)
         except Exception as e:
@@ -61,82 +61,30 @@ class Results(generics.ListCreateAPIView):
 # Guess data no longer user
 
 
-# class GuessList(APIView):
-#     #permission_classes = [IsAdminUser]
-#     serializer_class = CountrySerializer
-
-
-#     def get(self,  *args, **kwargs):
-        
-#         if not self.request.session.exists(self.request.session.session_key):
-#             self.request.session.create()
-        
-#         riddleId = self.kwargs['pk']
-        
-#         if self.request.session.get('guess_data'):
-#             guess_data_dict = self.request.session.get('guess_data')
-#         else:
-#             guess_data_dict = {}
-
-#         if str(riddleId) not in guess_data_dict:
-#             riddle_guess = []
-#             guess_data_dict[str(riddleId)] = riddle_guess
-#             self.request.session['guess_data'] = guess_data_dict
-#             self.request.session.modified = True
-        
-#         guess_data_dict = self.request.session.get('guess_data')
-#         return Response(guess_data_dict[str(riddleId)], status=status.HTTP_200_OK)
-
-#     def post(self, request, *args, **kwargs):
-
-#         if not self.request.session.exists(self.request.session.session_key):
-#             print('post not created')
-#             self.request.session.create()
-#         riddleId = self.kwargs['pk']
-
-#         if self.request.session.get('guess_data'):
-#             guess_data_dict = self.request.session.get('guess_data')
-#         else:
-#             guess_data_dict = {}
-
-#         if str(riddleId) not in guess_data_dict:
-#             riddle_guess = []
-#             guess_data_dict[str(riddleId)] = riddle_guess
-#             # self.request.session['guess_data'] = guess_data_dict
-#             # self.request.session.modified = True
-        
-        
-#         #guess_data_dict = self.request.session.get('guess_data')
-#         this_weeks_guesses = guess_data_dict[str(riddleId)]
-
-#         try: 
-#             guessed_country = request.data['country']
-
-#         except Exception as e:
-#             guessed_country ='placeholder' 
-#             print(e)
-
-#         ###### using sets to remove duplicates- convert list to set, add, then convert back
-
-#         this_weeks_guesses.append(guessed_country)
-#         guess_data_dict[str(riddleId)] = this_weeks_guesses
-
-#         self.request.session['guess_data'] = guess_data_dict
-
-#         return Response(status=status.HTTP_201_CREATED)    
-
-
 class RiddleRetrieve(generics.RetrieveAPIView):
     #permission_classes = [IsAdminUser]
-    serializer_class = RiddleSerializer
-    lookup_field = 'day'
+    # serializer_class = RiddleSerializer
+    # lookup_field = 'day'
 
-    def get_queryset(self, *args, **kwargs):
-        riddleId = self.kwargs['day']
+    def get(self, *args, **kwargs):
+        day = self.kwargs['day']
         #intitializeGuessData(self, riddleId)
+        #print(Country2.objects.select_related().values())
+        riddleObj = Riddle.objects.get(day=day)
+        if riddleObj.sort:
+            sort_method = riddleObj.sort
+        else:
+            sort_method = 'name'
 
+        answers = []
+        for ans in riddleObj.answers.all().order_by('population').values('name').order_by(sort_method):
 
-        return   Riddle.objects.all()
+            answers.append(ans)
+        riddle_answers = {}
+        riddle_answers['answers'] = answers
+        riddle_answers['day'] = day
+        riddle_answers['question'] = riddleObj.question
+        return Response(riddle_answers, status=status.HTTP_200_OK)
     
 
 
