@@ -1,1 +1,1 @@
-select "user", sum(points), count(*) from geo_result gr2 group by "user" order by sum(points) desc
+select "user", sum(points), count(*) from geo_result gr2 where "month" = 'May' group by "user"  order by sum(points) desc

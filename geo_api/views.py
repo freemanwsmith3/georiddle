@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import HttpResponse, JsonResponse
-from django.db.models import F, Sum, DecimalField, Sum
+from django.db.models import F, Sum, DecimalField, Sum, Func
 
 class CountryList(generics.ListCreateAPIView):
     queryset = Country2.objects.all()
@@ -71,13 +71,21 @@ class RiddleRetrieve(generics.RetrieveAPIView):
         #intitializeGuessData(self, riddleId)
         #print(Country2.objects.select_related().values())
         riddleObj = Riddle.objects.get(day=day)
+        sort_method = 'name'
+
         if riddleObj.sort:
             sort_method = riddleObj.sort
-        else:
-            sort_method = 'name'
+            if riddleObj.sort[-7:] == 'equator':
+                
+                qs= riddleObj.answers.all().annotate(equator=Func(F('lat'), function='ABS')).order_by(sort_method).values('name')
+                print(qs)
+
+        else:    
+            qs = riddleObj.answers.all().values('name').order_by(sort_method)
+            print(qs)
 
         answers = []
-        for ans in riddleObj.answers.all().order_by('population').values('name').order_by(sort_method):
+        for ans in qs:
 
             answers.append(ans)
         riddle_answers = {}
