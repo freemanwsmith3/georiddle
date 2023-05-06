@@ -6,6 +6,8 @@ from . import models
 class CountryAdmin(admin.ModelAdmin):
     list_display = ('name', 'id', 'capital', 'continent')
 
+admin.site.register(models.Country2)
+
 admin.site.register(models.Continent)
 
 admin.site.register(models.Capital)
@@ -15,3 +17,5 @@ admin.site.register(models.Language)
 admin.site.register(models.Region)
 
 admin.site.register(models.Riddle)
+
+admin.site.register(models.Result)
