@@ -65,19 +65,27 @@ try:
     countryset_length =5
 
     answers = []
-    for country in pop_desc_countries[0:15]:
+    for country in pop_desc_countries:
+        for letter in country[0].lower():
+            if letter == 'f':
+                answers.append(country[0])
+                if len(answers) == 5:
+                    break
+                pass
 
-        if country[0].lower()[-1:] not in vowels:
-            answers.append(country[0])
-            if len(answers) == 6:
-                break
-
-    submit = input("submit this riddle?  ")
+        #if country[0].lower()[-1:] == 'e':
+            # answers.append(country[0])
+            # if len(answers) == 5:
+            #     break
     print(answers)
+    submit = input("submit this riddle?  ")
+
     if submit == 'y':
         try:
+            curr.execute("""SELECT max(id) from geo_riddle gr""")
+            riddle_id = curr.fetchone()
             for ans in answers:
-                curr.execute("""INSERT INTO geo_riddle_answers (riddle_id, country2_id) VALUES(%s,%s) RETURNING id;""", [2075, ans])
+                curr.execute("""INSERT INTO geo_riddle_answers (riddle_id, country2_id) VALUES(%s,%s) RETURNING id;""", [riddle_id, ans])
             
             conn.commit()
             print('Submitted')
