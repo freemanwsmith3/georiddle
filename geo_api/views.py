@@ -75,8 +75,7 @@ class RiddleRetrieve(generics.RetrieveAPIView):
 
         if riddleObj.sort:
             sort_method = riddleObj.sort
-        if riddleObj.sort[-7:] == 'equator':
-            
+        if sort_method[-7:] == 'equator':
             qs= riddleObj.answers.all().annotate(equator=Func(F('lat'), function='ABS')).order_by(sort_method).values('name')
         else:    
             qs = riddleObj.answers.all().values('name').order_by(sort_method)
