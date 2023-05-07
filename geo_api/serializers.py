@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from geo.models import Country, Riddle, Result
+from geo.models import Country2, Riddle, Result
 
 # class CountrySerializer(serializers.ModelSerializer):
 #     class Meta:
@@ -8,7 +8,7 @@ from geo.models import Country, Riddle, Result
 
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Country
+        model = Country2
         fields = ('name',)
         
 class RiddleSerializer(serializers.ModelSerializer):
