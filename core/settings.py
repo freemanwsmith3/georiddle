@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'geo',
     'geo_api',
+    'carina',
     'rest_framework',
     'corsheaders',
 ]

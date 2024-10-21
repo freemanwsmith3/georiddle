@@ -1,1 +1,5 @@
-select "user", sum(points), count(*) from geo_result gr2 where "month" = 'May' group by "user"  order by sum(points) desc
+ALTER TABLE carina_content
+ADD COLUMN code VARCHAR(100) UNIQUE,
+ADD COLUMN image_url VARCHAR(200),
+ADD COLUMN title TEXT,
+ADD COLUMN description TEXT;
