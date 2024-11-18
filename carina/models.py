@@ -6,6 +6,7 @@ class Content(models.Model):
     image_url = models.URLField()
     title = models.TextField()
     description = models.TextField()
+    link = models.TextField()
 
     def __str__(self):
         return self.code
