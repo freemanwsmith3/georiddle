@@ -8,6 +8,7 @@ def get_content(request, code):
         'id': content.id,
         'image_url': content.image_url,
         'title': content.title,
-        'description': content.description
+        'description': content.description,
+        'link': content.link
     }
     return JsonResponse(data)
