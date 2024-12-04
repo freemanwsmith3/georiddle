@@ -8,6 +8,7 @@ class Content(models.Model):
     description = models.TextField()
     link = models.TextField()
     prompt = models.TextField()
+    greeting = models.TextField
 
     def __str__(self):
         return self.code

@@ -10,6 +10,7 @@ def get_content(request, code):
         'title': content.title,
         'description': content.description,
         'link': content.link,
-        'prompt': content.prompt
+        'prompt': content.prompt,
+        'greeting': content.greeting
     }
     return JsonResponse(data)
