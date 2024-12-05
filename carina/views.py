@@ -1,18 +1,19 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods  # Add this import
 from .models import Content
 import json
 
-@csrf_exempt  # Only for testing - remove in production and handle CSRF properly
+@csrf_exempt
+@require_http_methods(["GET", "POST"])  # Explicitly allow GET and POST methods
 def get_content(request, code):
-    # This gets the specific content row matching the code from the URL
     content = get_object_or_404(Content, code=code)
     
     if request.method == 'GET':
         data = {
             'id': content.id,
-            'code': content.code,  # Added code to response
+            'code': content.code,
             'image_url': content.image_url,
             'title': content.title,
             'description': content.description,
@@ -29,14 +30,6 @@ def get_content(request, code):
         try:
             data = json.loads(request.body)
             
-            # Verify we're updating the correct content by checking code
-            if 'code' in data and data['code'] != code:
-                return JsonResponse({
-                    'status': 'error',
-                    'message': 'Code mismatch'
-                }, status=400)
-            
-            # Update fields if they're in the request
             if 'rating' in data:
                 content.rating = data['rating']
             if 'topic' in data:
