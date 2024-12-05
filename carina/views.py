@@ -6,11 +6,13 @@ import json
 
 @csrf_exempt  # Only for testing - remove in production and handle CSRF properly
 def get_content(request, code):
+    # This gets the specific content row matching the code from the URL
     content = get_object_or_404(Content, code=code)
     
     if request.method == 'GET':
         data = {
             'id': content.id,
+            'code': content.code,  # Added code to response
             'image_url': content.image_url,
             'title': content.title,
             'description': content.description,
@@ -27,7 +29,14 @@ def get_content(request, code):
         try:
             data = json.loads(request.body)
             
-            # Update only if the fields are present in the request
+            # Verify we're updating the correct content by checking code
+            if 'code' in data and data['code'] != code:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': 'Code mismatch'
+                }, status=400)
+            
+            # Update fields if they're in the request
             if 'rating' in data:
                 content.rating = data['rating']
             if 'topic' in data:
@@ -41,6 +50,7 @@ def get_content(request, code):
                 'status': 'success',
                 'message': 'Content updated successfully',
                 'content': {
+                    'code': content.code,
                     'rating': content.rating,
                     'topic': content.topic,
                     'studyNote': content.studyNote
