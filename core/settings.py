@@ -78,7 +78,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -155,6 +162,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = (
     "https://georiddle.azurewebsites.net",
+    "https://red-ground-011ebaa0f.5.azurestaticapps.net",
     "https://georiddle.app",
     "http://localhost:8080",
     "http://localhost:3000",
@@ -165,6 +173,7 @@ CORS_ORIGIN_WHITELIST = (
 
 CSRF_TRUSTED_ORIGINS = [
     "https://georiddle.azurewebsites.net",
+    "https://red-ground-011ebaa0f.5.azurestaticapps.net",
     "https://georiddle.app",
     "http://localhost:8080",
     "http://localhost:3000",
@@ -175,6 +184,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 CORS_ALLOWED_ORIGINS = [
     "https://georiddle.azurewebsites.net",
+    "https://red-ground-011ebaa0f.5.azurestaticapps.net",
     "https://georiddle.app",
     "http://localhost:8080",
     "http://localhost:3000",
